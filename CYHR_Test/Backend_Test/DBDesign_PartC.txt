@@ -1,0 +1,10 @@
+Database Design & System design (PartC)
+
+我認為不需要在Attendance中記錄由公式運算出的結果, 
+因為Attendance的作用只為方便檢查出席率並方便計算外判費用,
+然而實際上需要檢閱外判金額的則是發票的時候。
+
+至於在invoice中錄發票的總額Invoice total, 我認為是需要的。
+首先, 發票有表明總金額會更方便交易, 而另一方面,
+由於發票是累積每一個月的attendance才發出的, 而invoice total是所有attendance收取的總和, 
+這樣就可清晰快捷地讓對方知道所需的總費用。

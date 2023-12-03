@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Frontend test</h1>
+
+  <input type="text" id="inputBox" placeholder="Enter a value">
+  <button onclick="addItem()">Add to List</button>
+
+  <div id="listContainer">
+    <h2>List:</h2>
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    // Retrieve stored list items from local storage on page load
+    window.onload = function() {
+      var storedItems = JSON.parse(localStorage.getItem("listItems"));
+
+      if (storedItems && storedItems.length > 0) {
+        var list = document.getElementById("list");
+
+        storedItems.forEach(function(item) {
+          var listItem = createListItem(item);
+          list.appendChild(listItem);
+        });
+      }
+    };
+
+    function addItem() {
+      var input = document.getElementById("inputBox");
+      var value = input.value.trim();
+
+      if (value !== "") {
+        var list = document.getElementById("list");
+        var listItem = createListItem(value);
+
+        list.insertBefore(listItem, list.firstChild);
+        input.value = "";
+
+        // Store updated list items in local storage
+        updateLocalStorage();
+      }
+    }
+
+    function createListItem(value) {
+      var listItem = document.createElement("li");
+      var deleteButton = document.createElement("button");
+
+      listItem.appendChild(document.createTextNode(value));
+      deleteButton.appendChild(document.createTextNode("Remove"));
+
+      deleteButton.onclick = function() {
+        var listItem = this.parentNode;
+        var list = listItem.parentNode;
+        list.removeChild(listItem);
+
+        // Store updated list items in local storage
+        updateLocalStorage();
+      };
+
+      listItem.appendChild(deleteButton);
+      return listItem;
+    }
+
+    function updateLocalStorage() {
+      var listItems = Array.from(document.getElementById("list").children).map(function(item) {
+        return item.firstChild.textContent;
+      });
+
+      localStorage.setItem("listItems", JSON.stringify(listItems));
+    }
+  </script>
+</body>
+</html>

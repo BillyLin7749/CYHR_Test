@@ -1,0 +1,47 @@
+Table Company {
+  id int [pk]
+  name varchar
+  mobile varchar
+  email varchar
+}
+
+Table Warehouse {
+  id int [pk]
+  company_id int [ref: > Company.id]
+  name varchar
+  position varchar
+}
+
+Table Position {
+  id int [pk]
+  warehouse_id int [ref: > Warehouse.id]
+  name varchar
+  work_hours decimal
+  daily_salary decimal
+  overtime_hourly_rate decimal
+}
+
+Table Labour {
+  id int [pk]
+  name varchar
+  age int
+  mobile varchar
+  email varchar
+}
+
+Table Attendance {
+  id int [pk]
+  labour_id int [ref: > Labour.id]
+  warehouse_id int [ref: > Warehouse.id]
+  date date
+  hours_worked decimal
+  overtime_hours decimal
+}
+
+Table Invoice {
+  id int [pk]
+  attendance_id int [ref: > Attendance.id]
+  company_id int [ref: > Company.id]
+  invoice_date date
+  invoice_total decimal
+}
